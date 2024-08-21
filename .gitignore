@@ -97,3 +97,7 @@ target/
 Thumbs.db
 
 .env
+
+# sift md files
+sift_folder_summary.md
+*sift_summary.md

@@ -23,6 +23,29 @@ git clone https://github.com/yourusername/code-knowledge-graph-builder.git
 cd code-knowledge-graph-builder
 poetry install
 ```
+## Local Development
+
+You will need to create a .env file in the root of the project with the following content:
+
+```bash
+OPENAI_API_KEY=your_openai_api_key
+```
+
+Following are a list of commands that can be used to develop the project locally:
+
+### Linting
+
+Run the linter to ensure the codebase is clean:
+
+```bash
+poetry run ruff check .
+```
+
+### Running the CLI using
+
+```bash
+poetry run sift -- [folder path - or - repository path]
+```
 
 ## Usage
 
