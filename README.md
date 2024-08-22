@@ -40,6 +40,8 @@ Run the linter to ensure the codebase is clean:
 
 ```bash
 poetry run ruff check .
+
+poetry run mypy . --namespace-packages --explicit-package-bases --show-traceback
 ```
 
 ### Running the CLI using
@@ -48,12 +50,18 @@ poetry run ruff check .
 poetry run sift -- [folder path - or - repository path]
 ```
 
+### cleanup
+
+```bash
+find . -type f -name '*_sift_summary.md' -exec rm -v {} +
+```
+
 ## Usage
 
 1. Run the tool on your code repository:
 
    ```bash
-   poetry run python main.py /path/to/your/repository
+   poetry run sift /path/to/your/repository
    ```
 
 2. The tool will analyze the codebase, generate Markdown files, and summarize them in each folder.

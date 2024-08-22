@@ -1,6 +1,7 @@
 import git
 from datetime import datetime
 import os
+import fnmatch
 
 def word_count(string):
     """
@@ -131,7 +132,7 @@ def load_gitignore_patterns(repo_path, config):
     :return: Set of exclusion patterns.
     """
     gitignore_path = os.path.join(repo_path, ".gitignore")
-    patterns = set(config.get("default_exclusions", []))
+    patterns = set(config["default_exclusions"])
 
     if os.path.exists(gitignore_path):
         with open(gitignore_path, "r", encoding="utf-8") as gitignore_file:
@@ -151,6 +152,6 @@ def should_exclude(path, patterns):
     :return: True if the path should be excluded, False otherwise.
     """
     for pattern in patterns:
-        if pattern in path:
+        if fnmatch.fnmatch(path, pattern) or fnmatch.fnmatch(path, f"*/{pattern}"):
             return True
     return False

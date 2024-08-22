@@ -30,7 +30,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-select = ["E", "F", "W", "C90"]
+select = ["E", "F", "W", "C90", "F841"]
 ignore = []
 fixable = ["A", "B", "C", "D", "E", "F"]
 unfixable = []
@@ -52,3 +52,6 @@ max-complexity = 10
 
 [tool.poetry.scripts]
 sift = "src.cli:main"
+
+[tool.mypy]
+files = ["src/"]
