@@ -1,7 +1,15 @@
 import os
 from .gen_ai import process_large_file, generate_text_from_prompt
 from .prompts import CODE_PROMPT, CONFIG_PROMPT, DOC_PROMPT, FOLDER_SUMMARY_PROMPT
-from .utils import word_count, get_latest_git_hash, generate_file_summary_md, generate_folder_summary_md, extract_git_hash_from_md
+from .utils import (
+    word_count,
+    get_latest_git_hash,
+    generate_file_summary_md,
+    generate_folder_summary_md,
+    extract_git_hash_from_md,
+    load_gitignore_patterns,
+    should_exclude,
+)
 
 def is_code_file(file_path, code_extensions):
     return file_path.endswith(tuple(code_extensions))
@@ -29,7 +37,10 @@ async def generate_file_summary(file_path, file_type, content, config, git_hash)
     # Check if the markdown file already exists and has the same Git hash
     existing_hash = extract_git_hash_from_md(markdown_file_path)
     if existing_hash == git_hash:
-        print(f"Skipping {file_path} as the content has not changed (Git hash: {git_hash}).")
+        print(
+            f"Skipping {file_path} as the content has not changed "
+            f"(Git hash: {git_hash})."
+        )
         return markdown_file_path, None
 
     # Generate markdown content based on file type and content size
@@ -61,23 +72,34 @@ async def generate_file_summary(file_path, file_type, content, config, git_hash)
 
 async def generate_folder_summary(root, folder_markdown_content, config, git_hash):
     folder_name = os.path.basename(root)
-    folder_summary_path = os.path.join(root, f"{folder_name}_folder{config['sift_extension']}")
+    folder_summary_path = os.path.join(
+        root, f"{folder_name}_folder{config['sift_extension']}"
+    )
 
     # Check if the folder summary file already exists and has the same Git hash
     existing_hash = extract_git_hash_from_md(folder_summary_path)
     if existing_hash == git_hash:
-        print(f"Skipping folder {root} as the content has not changed (Git hash: {git_hash}).")
+        print(
+            f"Skipping folder {root} as the content has not changed "
+            f"(Git hash: {git_hash})."
+        )
         return folder_summary_path, None
 
     full_markdown_content = "\n\n".join(folder_markdown_content)
     # Generate summary for the folder
-    folder_summary = await generate_text_from_prompt(FOLDER_SUMMARY_PROMPT, full_markdown_content, config)
+    folder_summary = await generate_text_from_prompt(
+        FOLDER_SUMMARY_PROMPT,
+        full_markdown_content,
+        config
+    )
 
     # Generate files_and_folders: List of files and subfolders in the folder.
     files_and_folders = os.listdir(root)
 
     # Generate the folder summary markdown content
-    folder_md_content = generate_folder_summary_md(root, files_and_folders, folder_summary, git_hash)
+    folder_md_content = generate_folder_summary_md(
+        root, files_and_folders, folder_summary, git_hash
+    )
 
     # Save the folder summary as a markdown file at the folder level
     with open(folder_summary_path, 'w', encoding='utf-8') as folder_md_file:
@@ -90,6 +112,7 @@ async def generate_markdown_files(start_path, config):
     parent_folder_markdown_content = []
     print(f"Generating markdown files for {start_path}")
     git_hash = get_latest_git_hash(start_path)
+    exclusion_patterns = load_gitignore_patterns(start_path, config)
 
     for root, dirs, files in os.walk(start_path, topdown=True):
         folder_markdown_files = []
@@ -98,6 +121,12 @@ async def generate_markdown_files(start_path, config):
         for file in files:
             print(f"Processing file: {file}")
             file_path = os.path.join(root, file)
+
+            # Exclude files listed in .gitignore or default exclusions
+            if should_exclude(file_path, exclusion_patterns):
+                print(f"Skipping excluded file {file_path}")
+                continue
+
             # If file ends with config["sift_extension"], skip it
             if file.endswith(config["sift_extension"]):
                 print(f"Skipping file {file} as it is a generated summary file.")
@@ -106,13 +135,18 @@ async def generate_markdown_files(start_path, config):
             file_type = categorize_file(file_path, config)
 
             if file_type is None:
-                print(f"Skipping file {file} as it is not a code, config, or documentation file.")
+                print(
+                    f"Skipping file {file} as it is not a code, config, "
+                    f"or documentation file."
+                )
                 continue  # Skip non-relevant files
 
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            markdown_file_path, markdown_content = await generate_file_summary(file_path, file_type, content, config, git_hash)
+            markdown_file_path, markdown_content = await generate_file_summary(
+                file_path, file_type, content, config, git_hash
+            )
 
             # Collect markdown file paths and content for the folder summary
             if markdown_content:  # Only add if the content was generated (not skipped)
@@ -120,7 +154,9 @@ async def generate_markdown_files(start_path, config):
                 folder_markdown_content.append(markdown_content)
 
         # Generate folder-level summary after processing all files
-        folder_summary_path, folder_summary = await generate_folder_summary(root, folder_markdown_content, config, git_hash)
+        folder_summary_path, folder_summary = await generate_folder_summary(
+            root, folder_markdown_content, config, git_hash
+        )
 
         # Store folder summaries for the parent folder
         if folder_summary:  # Only add if the content was generated (not skipped)
@@ -130,6 +166,8 @@ async def generate_markdown_files(start_path, config):
         # If we're exiting a folder, generate the parent folder summary
         if not dirs:
             if parent_folder_markdown_files:
-                await generate_folder_summary(root, parent_folder_markdown_content, config, git_hash)
+                await generate_folder_summary(
+                    root, parent_folder_markdown_content, config, git_hash
+                )
                 parent_folder_markdown_files.clear()
                 parent_folder_markdown_content.clear()

@@ -1,5 +1,6 @@
 import git
 from datetime import datetime
+import os
 
 def word_count(string):
     """
@@ -16,7 +17,8 @@ def split_file_content(content, max_length=80000, overlap=500):
 
     :param content: The content of the file.
     :param max_length: The maximum number of words in each chunk (default is 80000).
-    :param overlap: The number of overlapping words between consecutive chunks (default is 500).
+    :param overlap: The number of overlapping words between consecutive chunks
+                    (default is 500).
     :return: A list of chunks.
     """
     words = content.split()
@@ -119,3 +121,36 @@ def extract_git_hash_from_md(file_path):
                     return next_line  # This is the Git hash
     except FileNotFoundError:
         return None
+
+def load_gitignore_patterns(repo_path, config):
+    """
+    Loads the .gitignore patterns and combines them with default exclusions.
+
+    :param repo_path: Path to the repository root.
+    :param config: Configuration dictionary with default exclusions.
+    :return: Set of exclusion patterns.
+    """
+    gitignore_path = os.path.join(repo_path, ".gitignore")
+    patterns = set(config.get("default_exclusions", []))
+
+    if os.path.exists(gitignore_path):
+        with open(gitignore_path, "r", encoding="utf-8") as gitignore_file:
+            for line in gitignore_file:
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    patterns.add(line)
+
+    return patterns
+
+def should_exclude(path, patterns):
+    """
+    Checks if a given path matches any exclusion patterns.
+
+    :param path: Path to check.
+    :param patterns: Set of exclusion patterns.
+    :return: True if the path should be excluded, False otherwise.
+    """
+    for pattern in patterns:
+        if pattern in path:
+            return True
+    return False

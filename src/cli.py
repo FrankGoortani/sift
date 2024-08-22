@@ -9,13 +9,15 @@ import asyncio
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Code Knowledge Graph Builder - A tool to generate knowledge graphs from code repositories."
+        description="Code Knowledge Graph Builder - A tool to generate knowledge graphs"
+                    "from code repositories."
     )
 
     parser.add_argument(
         'repo_or_path',
         type=str,
-        help='URL of the Git repository or path to a local directory containing the code'
+        help=
+        'URL of the Git repository or path to a local directory containing the code'
     )
 
     parser.add_argument(

@@ -23,6 +23,7 @@ git clone https://github.com/yourusername/code-knowledge-graph-builder.git
 cd code-knowledge-graph-builder
 poetry install
 ```
+
 ## Local Development
 
 You will need to create a .env file in the root of the project with the following content:
@@ -50,6 +51,7 @@ poetry run sift -- [folder path - or - repository path]
 ## Usage
 
 1. Run the tool on your code repository:
+
    ```bash
    poetry run python main.py /path/to/your/repository
    ```
@@ -62,7 +64,7 @@ poetry run sift -- [folder path - or - repository path]
 
 After running the tool, your repository might look something like this:
 
-```
+```text
 your-repository/
 │
 ├── src/

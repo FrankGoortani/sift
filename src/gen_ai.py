@@ -23,6 +23,13 @@ async def generate_text_from_prompt(prompt, content_chunk, config):
 
 async def process_large_file(prompt, content, config):
     """Handles large files by splitting them and processing each chunk."""
-    chunks = split_file_content(content, config["max_tokens"], config["token_split_overlap"])
-    results = [await generate_text_from_prompt(prompt, chunk, config) for chunk in chunks]
+    chunks = split_file_content(
+        content,
+        config["max_tokens"],
+        config["token_split_overlap"]
+    )
+    results = [
+        await generate_text_from_prompt(prompt, chunk, config)
+        for chunk in chunks
+    ]
     return "\n".join(results)
