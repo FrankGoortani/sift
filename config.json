@@ -20,5 +20,5 @@
     "max_tokens": 80000,
     "token_split_overlap": 500,
     "sift_extension": "_sift_summary.md",
-    "default_exclusions": ["node_modules", "vendor", ".git", ".venv", ".ruff_cache", "__pycache__", ".github", ".vscode", ".idea", ".gradle", ".maven", ".sass-cache", ".cache", ".gradle", ".maven", ".gem", ".bundle", ".sass-cache"]
+    "default_exclusions": ["node_modules", "vendor", "__pycache__"]
 }

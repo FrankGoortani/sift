@@ -109,6 +109,9 @@ async def generate_markdown_files(start_path, config):
     exclusion_patterns = load_gitignore_patterns(start_path, config)
 
     for root, dirs, files in os.walk(start_path, topdown=True):
+        # Filter out hidden directories (starting with '.')
+        dirs[:] = [d for d in dirs if not d.startswith('.')]
+
         await process_files(
             root, dirs, files, config, git_hash, exclusion_patterns,
             parent_folder_markdown_files, parent_folder_markdown_content
@@ -124,8 +127,8 @@ async def process_files(
     for file in files:
         file_path = os.path.join(root, file)
 
-        # Exclude files listed in .gitignore or default exclusions
-        if should_exclude(file_path, exclusion_patterns):
+        # Exclude hidden files and files listed in .gitignore or default exclusions
+        if file.startswith('.') or should_exclude(file_path, exclusion_patterns):
             continue
 
         # If file ends with config["sift_extension"], skip it
