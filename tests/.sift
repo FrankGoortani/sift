@@ -1,0 +1,107 @@
+# Folder summary: /workspaces/sift/tests
+## Files and Sub-folders
+- __init__.py
+- .sift
+## Version
+ff3d52213748f687cd8d307c9fe160231f9c67b5
+2024-09-02 00:58:57
+## AI Summary
+To properly summarize the contents of the folder under `/workspaces/sift/tests`, let's examine each file to identify key functions, classes, and settings as well as their relationships. However, since detailed file content is not provided, I'll create a template based on typical structures of test folders. Once you provide the actual contents, the summaries can be refined further.
+
+Below is an example template based on typical Python test structures:
+
+### File: `__init__.py`
+**Entities**: None (usually empty or contains initialization code)
+**Relationships**: None
+
+### File: `test_module1.py`
+- **Entities**: 
+  - `TestClass1` (Class)
+  - `test_function1()` (Function)
+  - `setup_module()` (Setting / Fixture)
+- **Relationships**:
+  - `setup_module()` initializes settings for `TestClass1`.
+  - `TestClass1` has multiple methods under test.
+  - `test_function1()` validates specific functionality of `module1`.
+
+### File: `test_module2.py`
+- **Entities**: 
+  - `TestClass2` (Class)
+  - `test_function2()` (Function)
+  - `setup_function()` (Setting / Fixture)
+- **Relationships**:
+  - `setup_function()` initializes settings for `test_function2()`.
+  - `TestClass2` contains methods that are tested individually.
+  - `test_function2()` tests specific features in `module2`.
+
+To complete your request, here is how you can structure the details for each file based on Chen Notation:
+
+### File: `__init__.py`
+**Entities**: None
+**Relationships**: None
+
+### File: `test_module1.py`
+
+#### Entities
+```plaintext
++---------------------+
+|    TestClass1       |
++---------------------+
+
++----------------------+
+|  test_function1()    |
++----------------------+
+
++----------------------+
+|  setup_module()    |
++----------------------+
+```
+
+#### Relationships
+```plaintext
++---------------------+                                        +----------------------+
+|   setup_module()   |------------> initializes settings for  |    TestClass1        |
++---------------------+                                        +----------------------+
+
++----------------------+
+|  test_function1()    |---\
++----------------------+    | validates specific functionality
+                            | of module1
++---------------------+     |
+|    TestClass1       |<----/
++---------------------+
+```
+
+### File: `test_module2.py`
+
+#### Entities
+```plaintext
++---------------------+
+|    TestClass2       |
++---------------------+
+
++----------------------+
+|  test_function2()    |
++----------------------+
+
++------------------------+
+|  setup_function()      |
++------------------------+
+```
+
+#### Relationships
+```plaintext
++------------------------+                                        +----------------------+
+|  setup_function()      |------------> initializes settings for  |  test_function2()    |
++------------------------+                                        +----------------------+
+
++---------------------+
+|  test_function2()   |---\
++---------------------+    | tests specific features
+                            | in module2
++---------------------+     |
+|    TestClass2       |<----/
++---------------------+
+```
+
+Please provide specific file contents to refine the summaries accurately.

@@ -16,8 +16,8 @@ def main():
     parser.add_argument(
         'repo_or_path',
         type=str,
-        help=
-        'URL of the Git repository or path to a local directory containing the code'
+        help="URL of the Git repository or path to a local directory"
+             "containing the code"
     )
 
     parser.add_argument(
@@ -42,7 +42,6 @@ def main():
 
     # Determine if the input is a URL (assume it is if it contains "http" or "git")
     if "http" in args.repo_or_path or "git" in args.repo_or_path:
-        # Handle as a Git repository URL
         with tempfile.TemporaryDirectory() as tmp_dir:
             print(f"Cloning repository {args.repo_or_path} into temporary directory...")
             clone_command = ["git", "clone", args.repo_or_path, tmp_dir]

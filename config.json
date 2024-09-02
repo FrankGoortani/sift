@@ -16,9 +16,9 @@
         ".md", ".rst", ".txt", ".adoc", ".asciidoc", ".docx", ".odt", ".pdf",
         ".tex", ".rtf", ".epub"
     ],
-    "default_model":"gpt-4o-mini",
+    "default_model":"gpt-4o",
     "max_tokens": 80000,
     "token_split_overlap": 500,
-    "sift_extension": "_sift_summary.md",
+    "sift_extension": ".sift",
     "default_exclusions": ["node_modules", "vendor", "__pycache__"]
 }

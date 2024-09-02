@@ -1,0 +1,269 @@
+# Folder summary: /workspaces/sift/
+## Files and Sub-folders
+- tests
+- src
+- LICENSE
+- config.json
+- pyproject.toml
+- README.md
+- CONTRIBUTING.md
+- main.py
+## Version
+3b9feba1e3f655a60c65a3b700ca2213ae26b4b1
+2024-09-02 00:59:49
+## AI Summary
+# Folder summary: /workspaces/sift/src
+
+## **File: `config.py`**
+- **Entities**: 
+  - `load_config` (Function)
+- **Dependencies**: 
+  - `json`
+  - `os`
+- **Relationships**:
+  - `load_config` → uses → `json.load`
+  - `load_config` → uses → `os.path`
+  - `load_config` → uses → `os.path.join`
+  - `load_config` → uses → `os.path.exists`
+- **Summary**: The file provides a function to load and update configuration settings, reading a default configuration from a file and optionally updating it.
+
+## **File: `prompts.py`**
+- **Entities**: 
+  - `summarize_code_using_chen_notation` (Function)
+  - `extract_entities` (Function)
+  - `identify_relationships` (Function)
+  - `use_chen_notation` (Function)
+  - `mention_filename` (Function)
+  - `provide_context` (Function)
+  - `generate_summary` (Function)
+- **Dependencies**: 
+  - None explicitly mentioned
+- **Relationships**:
+  - `summarize_code_using_chen_notation` → contains → `extract_entities`
+  - `summarize_code_using_chen_notation` → contains → `identify_relationships`
+  - `summarize_code_using_chen_notation` → contains → `use_chen_notation`
+  - `summarize_code_using_chen_notation` → contains → `mention_filename`
+  - `summarize_code_using_chen_notation` → contains → `provide_context`
+  - `summarize_code_using_chen_notation` → contains → `generate_summary`
+  - `extract_entities` → depends on → `code snippet`
+  - `identify_relationships` → depends on → `entities`
+  - `use_chen_notation` → depends on → `entities`, `relationships`
+  - `mention_filename` → uses → `filename`
+  - `provide_context` → depends on → `entities`, `relationships`
+  - `generate_summary` → uses → `entities`, `relationships`, `context`
+- **Summary**: This document defines a methodology for summarizing code using Chen Notation, focusing on extracting entities, identifying relationships, and generating concise summaries.
+
+## **File: `cli.py`**
+- **Entities**: 
+  - `main` (Function)
+- **Dependencies**: 
+  - `argparse`
+  - `sys`
+  - `os`
+  - `generate_markdown_files` (from `.generate_md`)
+  - `load_config` (from `.config`)
+  - `subprocess`
+  - `tempfile`
+  - `asyncio`
+- **Relationships**:
+  - `main` → uses → `argparse.ArgumentParser`
+  - `main` → calls → `load_config`
+  - `main` → uses → `tempfile.TemporaryDirectory`
+  - `main` → calls → `subprocess.run`
+  - `main` → calls → `asyncio.run`
+  - `main` → calls → `generate_markdown_files`
+- **Summary**: This script generates knowledge graphs from code repositories using command-line arguments, handling functionalities like Git repository management and directory verification.
+
+## **File: `utils.py`**
+- **Entities**:
+  - `word_count` (Function)
+  - `split_file_content` (Function)
+  - `get_latest_git_hash` (Function)
+  - `generate_file_address` (Function)
+  - `generate_file_summary_md` (Function)
+  - `generate_folder_summary_md` (Function)
+  - `load_gitignore_patterns` (Function)
+  - `should_exclude` (Function)
+  - `extract_git_hash_from_md` (Function)
+- **Dependencies**: 
+  - `git`
+  - `datetime`
+  - `os`
+  - `fnmatch`
+- **Relationships**:
+  - `split_file_content` → uses → `string.split`
+  - `get_latest_git_hash` → calls → `git.Repo`
+  - `get_latest_git_hash` → calls → `os.path`
+  - `generate_file_summary_md` → calls → `generate_file_address`
+  - `generate_file_summary_md` → uses → `datetime.now`
+  - `generate_folder_summary_md` → uses → `datetime.now`
+  - `load_gitignore_patterns` → calls → `os.path`
+  - `should_exclude` → calls → `fnmatch.fnmatch`
+  - `extract_git_hash_from_md` → uses → `open`
+- **Summary**: This script provides utilities for generating summaries and handling Git metadata, including word counting, file splitting, fetching Git commit hashes, and generating markdown summaries.
+
+## **File: `gen_ai.py`**
+- **Entities**: 
+  - `generate_text_from_prompt` (Function)
+  - `process_large_file` (Function)
+- **Dependencies**: 
+  - `openai`
+  - `os`
+  - `dotenv` (`load_dotenv`)
+  - `split_file_content` (from `.utils`)
+- **Relationships**:
+  - `generate_text_from_prompt` → uses → `client.chat.completions.create`
+  - `process_large_file` → calls → `split_file_content`
+  - `process_large_file` → calls → `generate_text_from_prompt`
+- **Summary**: This module interfaces with OpenAI’s API for text generation, providing functions to handle large text files by splitting them and generating responses for each chunk.
+
+## **File: `generate_md.py`**
+- **Entities**: 
+  - `is_code_file` (Function)
+  - `is_config_file` (Function)
+  - `is_documentation_file` (Function)
+  - `categorize_file` (Function)
+  - `generate_file_summary` (Function)
+  - `generate_folder_summary` (Function)
+  - `generate_markdown_files` (Function)
+- **Dependencies**: 
+  - `os`
+  - `datetime`
+  - `process_large_file`
+  - `generate_text_from_prompt`
+  - `CODE_PROMPT`
+  - `CONFIG_PROMPT`
+  - `DOC_PROMPT`
+  - `FOLDER_SUMMARY_PROMPT`
+  - `word_count`
+  - `get_latest_git_hash`
+  - `generate_file_summary_md`
+  - `generate_folder_summary_md`
+  - `extract_git_hash_from_md`
+  - `load_gitignore_patterns`
+  - `should_exclude`
+- **Relationships**:
+  - `generate_file_summary` → calls → `get_latest_git_hash`
+  - `generate_file_summary` → calls → `word_count`
+  - `generate_file_summary` → calls → `process_large_file`
+  - `generate_file_summary` → calls → `generate_text_from_prompt`
+  - `generate_file_summary` → calls → `generate_file_summary_md`
+  - `generate_folder_summary` → calls → `os.path.basename`
+  - `generate_folder_summary` → calls → `get_latest_git_hash`
+  - `generate_folder_summary` → calls → `datetime.now.strftime`
+  - `generate_folder_summary` → calls → `generate_folder_summary_md`
+  - `generate_markdown_files` → calls → `os.walk`
+  - `generate_markdown_files` → calls → `load_gitignore_patterns`
+  - `generate_markdown_files` → calls → `should_exclude`
+  - `generate_markdown_files` → calls → `generate_folder_summary`
+  - `categorize_file` → calls → `is_code_file`
+  - `categorize_file` → calls → `is_config_file`
+  - `categorize_file` → calls → `is_documentation_file`
+- **Summary**: This file categorizes files and generates markdown summaries for both individual files and folders within a directory tree, utilizing asynchronous programming for efficiency.
+
+# Folder summary: /workspaces/sift/tests
+
+## **File: `__init__.py`**
+- **Entities**: 
+  - None (usually empty or contains initialization code)
+- **Relationships**: 
+  - None
+- **Summary**: Typically empty or contains initialization code for test suite.
+
+# Folder summary: /workspaces/sift
+
+## **File: `config.json`**
+- **Entities**: 
+  - `code_extensions`
+  - `config_extensions`
+  - `documentation_extensions`
+  - `default_model`
+  - `max_tokens`
+  - `token_split_overlap`
+  - `sift_extension`
+  - `default_exclusions`
+- **Relationships**:
+  - `max_tokens` → depends on → `default_model`
+  - `token_split_overlap` → depends on → `max_tokens`
+- **Summary**: This configuration file defines different categories of file extensions, sets a default model for some processing tasks, and specifies limits and behaviors for token processing.
+
+## **File: `pyproject.toml`**
+- **Entities**: 
+  - `[tool.poetry]`
+    - `name`
+    - `version`
+    - `description`
+    - `authors`
+    - `readme`
+    - `packages`
+  - `[tool.poetry.dependencies]`
+    - `python`, `openai`, `gitpython`, `requests`, `rich`, `python-dotenv`, `asyncio`
+  - `[tool.poetry.group.dev.dependencies]`
+    - `ruff`, `pytest`, `pytest-cov`, `mypy`, `black`, `isort`
+  - `[build-system]`
+    - `requires`
+    - `build-backend`
+  - `[tool.ruff]`
+    - `select`, `ignore`, `fixable`, `unfixable`, `exclude`, `line-length`, `target-version`
+  - `[tool.ruff.mccabe]`
+    - `max-complexity`
+  - `[tool.poetry.scripts]`
+    - `sift`
+  - `[tool.mypy]`
+    - `files`
+- **Relationships**:
+  - `[tool.poetry]` → describes → project metadata
+  - `[tool.poetry.dependencies]` → lists → runtime dependencies
+  - `[tool.poetry.group.dev.dependencies]` → lists → development dependencies
+  - `[build-system]` → sets up → build requirements
+  - `[tool.ruff]` → configures → linter settings
+  - `[tool.poetry.scripts]` → defines → command-line scripts
+  - `[tool.mypy]` → configures → type checker settings
+- **Summary**: This configuration file sets up a Python project managed with Poetry, defines project metadata, dependencies, linter configurations, build system requirements, and scripts.
+
+## **File: `README.md`**
+- **Entities**: 
+  - **Code Knowledge Graph Builder**: A tool to construct a knowledge graph from a code repository.
+  - **APIs, Patterns, Anti-patterns, Dependencies**: Components identified during code analysis.
+  - **Markdown Files**: Generated summaries of findings in each directory.
+  - **Knowledge Graph**: Aggregated information providing insights into the codebase.
+  - **AI-driven Linting Tool**: Potential use case for the generated knowledge graph.
+  - **Repository and Folder Paths**: Directories where the tool is run.
+  - **Poetry**: Dependency management and packaging tool.
+- **Relationships**:
+  - **Code Knowledge Graph Builder** → analyzes → **APIs, Patterns, Anti-patterns, Dependencies**
+  - **APIs, Patterns, Anti-patterns, Dependencies** → summarized into → **Markdown Files**
+  - **Markdown Files** → aggregate to form → **Knowledge Graph**
+  - **Knowledge Graph** → used by → **AI-driven Linting Tool**
+  - **Code Knowledge Graph Builder** → runs on → **Repository and Folder Paths**
+  - **Code Knowledge Graph Builder** → uses → **Poetry**
+- **Summary**: This document describes the `Code Knowledge Graph Builder`, its workflow, and how to install and use it. It highlights key components like APIs, patterns, dependencies, and their aggregation into a knowledge graph for insights.
+
+## **File: `CONTRIBUTING.md`**
+- **Entities**: 
+  - **Contributor**
+  - **Feature Request**
+  - **Bug Report**
+  - **Branch**
+  - **Pull Request (PR)**
+  - **Project Maintainer**
+  - **Roadmap**
+- **Relationships**:
+  - **Contributor** → submits → **Feature Request**
+  - **Contributor** → submits → **Bug Report**
+  - **Contributor** → creates → **Branch**
+  - **Contributor** → opens → **Pull Request**
+  - **Project Maintainer** → reviews → **Pull Request**
+  - **Pull Request** → linked to → **Feature Request/Bug Report**
+  - **Contributor** → follows → **Roadmap**
+- **Summary**: This document provides guidelines for contributing to the project, including submitting feature requests or bug reports, creating branches, and opening pull requests, ensuring alignment with the project's roadmap.
+
+## **File: `main.py`**
+- **Entities**: 
+  - `main` (Function)
+- **Dependencies**: 
+  - `src.cli.main`
+- **Relationships**:
+  - `main` → calls → `src.cli.main`
+  - `__main__` → calls → `main`
+- **Summary**: This script serves as an entry point for executing the `main` function from the `src.cli` module when run directly. It does not define any classes or additional functions.

@@ -1,0 +1,114 @@
+# Folder summary: /workspaces/sift/src
+## Files and Sub-folders
+- config.py
+- .sift
+- __pycache__
+- prompts.py
+- cli.py
+- utils.py
+- py.typed
+- gen_ai.py
+- __init__py
+- generate_md.py
+## Version
+3b9feba1e3f655a60c65a3b700ca2213ae26b4b1
+2024-09-02 00:58:50
+## AI Summary
+### Folder Summary: /workspaces/sift/src
+
+#### **__pycache__**
+- **Files**:
+  - `config.cpython-312.pyc`
+  - `gen_ai.cpython-312.pyc`
+  - `utils.cpython-312.pyc`
+  - `cli.cpython-312.pyc`
+  - `generate_md.cpython-312.pyc`
+  - `prompts.cpython-312.pyc`
+- **Version**: No commits found
+- **Summary**: This folder contains compiled Python bytecode files, which are not suitable for source code analysis. For meaningful summaries, source code is needed.
+
+#### **config.py**
+- **Entities**: `load_config` (Function)
+- **Dependencies**: `json`, `os`
+- **Relationships**:
+  - `load_config` → uses → `json.load`
+  - `load_config` → uses → `os.path`
+  - `load_config` → uses → `os.path.join`
+  - `load_config` → uses → `os.path.exists`
+- **Summary**: The file provides a function to load and update configuration settings, reading a default configuration from a file and optionally updating it.
+
+#### **prompts.py**
+- **Entities**: `summarize_code_using_chen_notation` (Function), `extract_entities` (Function), `identify_relationships` (Function), `use_chen_notation` (Function), `mention_filename` (Function), `provide_context` (Function), `generate_summary` (Function)
+- **Dependencies**: None explicitly mentioned
+- **Relationships**:
+  - `summarize_code_using_chen_notation` → contains → `extract_entities`
+  - `summarize_code_using_chen_notation` → contains → `identify_relationships`
+  - `summarize_code_using_chen_notation` → contains → `use_chen_notation`
+  - `summarize_code_using_chen_notation` → contains → `mention_filename`
+  - `summarize_code_using_chen_notation` → contains → `provide_context`
+  - `summarize_code_using_chen_notation` → contains → `generate_summary`
+  - `extract_entities` → depends on → `code snippet`
+  - `identify_relationships` → depends on → `entities`
+  - `use_chen_notation` → depends on → `entities`, `relationships`
+  - `mention_filename` → uses → `filename`
+  - `provide_context` → depends on → `entities`, `relationships`
+  - `generate_summary` → uses → `entities`, `relationships`, `context`
+- **Summary**: This document defines a methodology for summarizing code using Chen Notation, focusing on extracting entities, identifying relationships, and generating concise summaries.
+
+#### **cli.py**
+- **Entities**: `main` (Function)
+- **Dependencies**: `argparse`, `sys`, `os`, `generate_markdown_files` (from `.generate_md`), `load_config` (from `.config`), `subprocess`, `tempfile`, `asyncio`
+- **Relationships**:
+  - `main` → uses → `argparse.ArgumentParser`
+  - `main` → calls → `load_config`
+  - `main` → uses → `tempfile.TemporaryDirectory`
+  - `main` → calls → `subprocess.run`
+  - `main` → calls → `asyncio.run`
+  - `main` → calls → `generate_markdown_files`
+- **Summary**: This script generates knowledge graphs from code repositories using command-line arguments, handling functionalities like Git repository management and directory verification.
+
+#### **utils.py**
+- **Entities**: `word_count` (Function), `split_file_content` (Function), `get_latest_git_hash` (Function), `generate_file_address` (Function), `generate_file_summary_md` (Function), `generate_folder_summary_md` (Function), `load_gitignore_patterns` (Function), `should_exclude` (Function), `extract_git_hash_from_md` (Function)
+- **Dependencies**: `git`, `datetime`, `os`, `fnmatch`
+- **Relationships**:
+  - `split_file_content` → uses → `string.split`
+  - `get_latest_git_hash` → calls → `git.Repo`
+  - `get_latest_git_hash` → calls → `os.path`
+  - `generate_file_summary_md` → calls → `generate_file_address`
+  - `generate_file_summary_md` → uses → `datetime.now`
+  - `generate_folder_summary_md` → uses → `datetime.now`
+  - `load_gitignore_patterns` → calls → `os.path`
+  - `should_exclude` → calls → `fnmatch.fnmatch`
+  - `extract_git_hash_from_md` → uses → `open`
+- **Summary**: This script provides utilities for generating summaries and handling Git metadata, including word counting, file splitting, fetching Git commit hashes, and generating markdown summaries.
+
+#### **gen_ai.py**
+- **Entities**: `generate_text_from_prompt` (Function), `process_large_file` (Function)
+- **Dependencies**: `openai`, `os`, `dotenv` (`load_dotenv`), `split_file_content` (from `.utils`)
+- **Relationships**:
+  - `generate_text_from_prompt` → uses → `client.chat.completions.create`
+  - `process_large_file` → calls → `split_file_content`
+  - `process_large_file` → calls → `generate_text_from_prompt`
+- **Summary**: This module interfaces with OpenAI’s API for text generation, providing functions to handle large text files by splitting them and generating responses for each chunk.
+
+#### **generate_md.py**
+- **Entities**: `is_code_file` (Function), `is_config_file` (Function), `is_documentation_file` (Function), `categorize_file` (Function), `generate_file_summary` (Function), `generate_folder_summary` (Function), `generate_markdown_files` (Function)
+- **Dependencies**: `os`, `datetime`, `process_large_file`, `generate_text_from_prompt`, `CODE_PROMPT`, `CONFIG_PROMPT`, `DOC_PROMPT`, `FOLDER_SUMMARY_PROMPT`, `word_count`, `get_latest_git_hash`, `generate_file_summary_md`, `generate_folder_summary_md`, `extract_git_hash_from_md`, `load_gitignore_patterns`, `should_exclude`
+- **Relationships**:
+  - `generate_file_summary` → calls → `get_latest_git_hash`
+  - `generate_file_summary` → calls → `word_count`
+  - `generate_file_summary` → calls → `process_large_file`
+  - `generate_file_summary` → calls → `generate_text_from_prompt`
+  - `generate_file_summary` → calls → `generate_file_summary_md`
+  - `generate_folder_summary` → calls → `os.path.basename`
+  - `generate_folder_summary` → calls → `get_latest_git_hash`
+  - `generate_folder_summary` → calls → `datetime.now.strftime`
+  - `generate_folder_summary` → calls → `generate_folder_summary_md`
+  - `generate_markdown_files` → calls → `os.walk`
+  - `generate_markdown_files` → calls → `load_gitignore_patterns`
+  - `generate_markdown_files` → calls → `should_exclude`
+  - `generate_markdown_files` → calls → `generate_folder_summary`
+  - `categorize_file` → calls → `is_code_file`
+  - `categorize_file` → calls → `is_config_file`
+  - `categorize_file` → calls → `is_documentation_file`
+- **Summary**: This file categorizes files and generates markdown summaries for both individual files and folders within a directory tree, utilizing asynchronous programming for efficiency.

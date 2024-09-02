@@ -53,7 +53,7 @@ poetry run sift -- [folder path - or - repository path]
 ### cleanup
 
 ```bash
-find . -type f -name '*_sift_summary.md' -exec rm -v {} +
+find . -type f -name '*.sift' -exec rm -v {} +
 ```
 
 ## Usage
