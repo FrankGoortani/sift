@@ -1,5 +1,14 @@
 # SIFT - Code Knowledge Graph Builder
 
+> **⚠️ Project Status: No Longer Maintained**
+>
+> This project is no longer actively maintained. For similar functionality, please consider using these actively maintained alternatives:
+>
+> - [Aider](https://github.com/paul-gauthier/aider) - A command-line tool that lets you pair program with GPT-3.5/GPT-4
+> - [Cline](https://github.com/SaoudMuradi/cline) - A powerful AI coding assistant that helps you write, edit, and understand code
+>
+> Thank you to everyone who has contributed to and used this project.
+
 ## Overview
 
 Code Knowledge Graph Builder is an experimental tool designed to construct a knowledge graph from a code repository. This tool analyzes the structure of the repository, identifies code APIs, patterns, anti-patterns, and dependencies, and generates Markdown files that summarize these findings. The system then aggregates these summaries, bubbling up the information through the directory hierarchy to create a comprehensive knowledge graph.
@@ -93,26 +102,10 @@ your-repository/
 └── repository_summary.md
 ```
 
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix (`git checkout -b feature-name`).
-3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-name`).
-5. Open a pull request on GitHub.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Future Plans
-
-- Integration with AI models for advanced linting and code quality assessment.
-- Improved pattern recognition and summarization algorithms.
-- Enhanced support for various programming languages.
-
 ---
 
-*Note: This project is in an experimental phase and is subject to significant changes as development progresses.*
+*Note: This project is no longer maintained. Please consider using [Aider](https://github.com/paul-gauthier/aider) or [Cline](https://github.com/SaoudMuradi/cline) instead.*

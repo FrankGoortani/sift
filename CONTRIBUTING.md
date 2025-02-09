@@ -1,5 +1,18 @@
 # Contributing to SIFT
 
+> **⚠️ Project Status: No Longer Maintained**
+>
+> This project is no longer actively maintained or accepting contributions. For similar functionality, please consider contributing to these actively maintained alternatives:
+>
+> - [Aider](https://github.com/paul-gauthier/aider) - A command-line tool that lets you pair program with GPT-3.5/GPT-4
+> - [Cline](https://github.com/SaoudMuradi/cline) - A powerful AI coding assistant that helps you write, edit, and understand code
+>
+> Thank you to everyone who has contributed to this project in the past.
+
+The content below is preserved for historical reference:
+
+---
+
 Thank you for considering contributing to Code Knowledge Graph Builder! To ensure a smooth collaboration, please follow these guidelines.
 
 ## Contribution Guidelines
@@ -7,15 +20,15 @@ Thank you for considering contributing to Code Knowledge Graph Builder! To ensur
 ### 1. Working on the Roadmap
 
 - We encourage contributions to the existing list of features in the [Roadmap](#roadmap).
-- Before starting work on a feature, please check if it’s already assigned or in progress by someone else.
-- If you’d like to work on a feature from the Roadmap, please comment on the corresponding issue or feature request to express your interest. This helps avoid duplication of effort.
+- Before starting work on a feature, please check if it's already assigned or in progress by someone else.
+- If you'd like to work on a feature from the Roadmap, please comment on the corresponding issue or feature request to express your interest. This helps avoid duplication of effort.
 
 ### 2. Submitting Feature Requests or Bug Reports
 
-- If you’d like to add a new feature that is not in the Roadmap, or if you find a bug that needs fixing, please submit a **Feature Request** or **Bug Report** first.
+- If you'd like to add a new feature that is not in the Roadmap, or if you find a bug that needs fixing, please submit a **Feature Request** or **Bug Report** first.
 - To submit a request:
   - Open a new [Issue](https://github.com/frankgoortani/sift/issues) on GitHub.
-  - Clearly describe the feature or bug, its purpose, and how it aligns with the project’s goals.
+  - Clearly describe the feature or bug, its purpose, and how it aligns with the project's goals.
 - Once your submission is reviewed and approved, you can proceed to work on it.
 
 ### 3. Creating a Pull Request (PR)
@@ -61,9 +74,9 @@ This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDU
 
 ## Getting Help
 
-If you need help or have questions that aren’t addressed in this document, feel free to open an issue or reach out to the project maintainers.
+If you need help or have questions that aren't addressed in this document, feel free to open an issue or reach out to the project maintainers.
 
 Thank you for contributing to Code Knowledge Graph Builder!
 
 ---
-*This document is subject to change as the project evolves.*
+*Note: This project is no longer maintained. Please consider contributing to [Aider](https://github.com/paul-gauthier/aider) or [Cline](https://github.com/SaoudMuradi/cline) instead.*
